@@ -1,4 +1,4 @@
-package diana.dev.order_service.domain;
+package diana.dev.api.http.order;
 
 public enum OrderStatus {
 

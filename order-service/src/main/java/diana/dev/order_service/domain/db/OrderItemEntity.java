@@ -1,4 +1,4 @@
-package diana.dev.order_service.domain;
+package diana.dev.order_service.domain.db;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -21,14 +21,19 @@ public class OrderItemEntity {
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 
+    @Column(name = "item_id")
+    private Long itemId;
+
+    @Column(name = "item_name")
+    private String name;
+
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
     @Column(name = "price_at_purchase", nullable = false)
     private BigDecimal priceAtPurchase;
 
-    @Column(name = "item_id")
-    private Long itemId;
+
 
 
 }

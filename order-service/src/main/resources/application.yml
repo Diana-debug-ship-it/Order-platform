@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: postgres
+    username: postgres
+    url: jdbc:postgresql://localhost:5434/order_platform
+  application:
+    name: order-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 8080
+
+payment-service:
+  base-url: http://localhost:8081

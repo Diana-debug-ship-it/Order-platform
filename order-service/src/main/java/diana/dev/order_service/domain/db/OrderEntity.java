@@ -1,6 +1,7 @@
-package diana.dev.order_service.domain;
+package diana.dev.order_service.domain.db;
 
 
+import diana.dev.api.http.order.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +10,6 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -45,5 +45,5 @@ public class OrderEntity {
     private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
-    private Set<OrderItemEntity> orderItemEntities = new LinkedHashSet<>();
+    private Set<OrderItemEntity> items = new LinkedHashSet<>();
 }
