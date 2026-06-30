@@ -1,6 +1,7 @@
-package diana.dev.payment_service.domain;
+package diana.dev.payment_service.domain.db;
 
 
+import diana.dev.api.http.payment.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,5 +36,5 @@ public class PaymentEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_status", nullable = false)
-    private PaymentStatus paymentStatus;
+    private diana.dev.api.http.payment.PaymentStatus paymentStatus;
 }

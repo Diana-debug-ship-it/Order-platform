@@ -1,8 +1,11 @@
 package diana.dev.payment_service.domain;
 
 
-import diana.dev.payment_service.api.CreatePaymentRequestDto;
-import diana.dev.payment_service.api.CreatePaymentResponseDto;
+import diana.dev.api.http.payment.CreatePaymentRequestDto;
+import diana.dev.api.http.payment.CreatePaymentResponseDto;
+import diana.dev.api.http.payment.PaymentMethod;
+import diana.dev.payment_service.domain.db.PaymentEntityMapper;
+import diana.dev.payment_service.domain.db.PaymentRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,8 +31,8 @@ public class PaymentService {
         var entity = mapper.toEntity(dto);
 
         var status = dto.paymentMethod().equals(PaymentMethod.QR)
-                ? PaymentStatus.PAYMENT_FAILED
-                : PaymentStatus.PAYMENT_SUCCEEDED;
+                ? diana.dev.api.http.payment.PaymentStatus.PAYMENT_FAILED
+                : diana.dev.api.http.payment.PaymentStatus.PAYMENT_SUCCEEDED;
 
         entity.setPaymentStatus(status);
 

@@ -1,7 +1,7 @@
-package diana.dev.payment_service.domain;
+package diana.dev.payment_service.domain.db;
 
-import diana.dev.payment_service.api.CreatePaymentRequestDto;
-import diana.dev.payment_service.api.CreatePaymentResponseDto;
+import diana.dev.api.http.payment.CreatePaymentRequestDto;
+import diana.dev.api.http.payment.CreatePaymentResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
