@@ -1,7 +1,4 @@
-package diana.dev.payment_service.api;
-
-import diana.dev.payment_service.domain.PaymentMethod;
-import diana.dev.payment_service.domain.PaymentStatus;
+package diana.dev.api.http.payment;
 
 import java.math.BigDecimal;
 

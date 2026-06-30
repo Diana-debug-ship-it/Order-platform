@@ -1,7 +1,4 @@
-package diana.dev.order_service.api;
-
-import diana.dev.order_service.domain.OrderEntity;
-import jakarta.persistence.*;
+package diana.dev.api.http.order;
 
 import java.math.BigDecimal;
 

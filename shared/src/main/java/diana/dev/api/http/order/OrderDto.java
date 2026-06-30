@@ -1,7 +1,4 @@
-package diana.dev.order_service.api;
-
-import diana.dev.order_service.domain.OrderItemEntity;
-import diana.dev.order_service.domain.OrderStatus;
+package diana.dev.api.http.order;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -15,6 +12,6 @@ public record OrderDto(
         String courierName,
         Integer etaMinutes,
         OrderStatus status,
-        Set<OrderItemDto> orderItemEntities
+        Set<OrderItemDto> items
 ) {
 }

@@ -1,9 +1,11 @@
-package diana.dev.payment_service.api;
+package diana.dev.api.http.payment;
 
-import diana.dev.payment_service.domain.PaymentMethod;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 
+
+@Builder
 public record CreatePaymentRequestDto(
         Long orderId,
         PaymentMethod paymentMethod,

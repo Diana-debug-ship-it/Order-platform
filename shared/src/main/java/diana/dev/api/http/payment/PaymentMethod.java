@@ -1,4 +1,4 @@
-package diana.dev.payment_service.domain;
+package diana.dev.api.http.payment;
 
 public enum PaymentMethod {
     CARD,
