@@ -5,7 +5,9 @@ import diana.dev.api.http.order.CreateOrderRequestDto;
 import diana.dev.api.http.order.OrderDto;
 import diana.dev.api.http.order.OrderStatus;
 import diana.dev.api.http.payment.CreatePaymentRequestDto;
+import diana.dev.api.http.payment.CreatePaymentResponseDto;
 import diana.dev.api.http.payment.PaymentStatus;
+import diana.dev.api.kafka.OrderPaidEvent;
 import diana.dev.order_service.api.OrderPaymentRequest;
 import diana.dev.order_service.domain.db.OrderEntity;
 import diana.dev.order_service.domain.db.OrderEntityMapper;
@@ -15,6 +17,8 @@ import diana.dev.order_service.external.PaymentHttpClient;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -29,6 +33,10 @@ public class OrderProcessor {
     private final OrderJpaRepository repository;
     private final OrderEntityMapper mapper;
     private final PaymentHttpClient httpClient;
+    private final KafkaTemplate<Long, OrderPaidEvent> kafkaTemplate;
+
+    @Value("${order-paid-topic}")
+    private String orderPaidTopic;
 
     public OrderDto createOrder(CreateOrderRequestDto request) {
 
@@ -114,7 +122,26 @@ public class OrderProcessor {
                 : OrderStatus.PAYMENT_FAILED;
 
         entity.setStatus(status);
+
+        sendOrderPaidEvent(entity, response);
+
         return mapper.toOrderDto(repository.save(entity));
+    }
+
+    private void sendOrderPaidEvent(OrderEntity entity, CreatePaymentResponseDto responseDto) {
+        kafkaTemplate.send(
+                orderPaidTopic,
+                entity.getId(),
+                OrderPaidEvent.builder()
+                        .orderId(entity.getId())
+                        .amount(entity.getTotalAmount())
+                        .paymentMethod(responseDto.paymentMethod())
+                        .paymentId(responseDto.paymentId())
+                        .build()
+        ).thenAccept(result -> {
+            log.info("Order paid event sent with id={}", entity.getId());
+        })
+        ;
     }
 
 }
